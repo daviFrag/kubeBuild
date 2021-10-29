@@ -21,6 +21,8 @@ inputs:
     description: 'Image github docker registry'
   GITHUB_TOKEN:
     description: 'Github token'
+  DOCKER_USERNAME:
+    description: 'Docker username'
   GITHUB_EMAIL:
     description: 'Github email'
     
