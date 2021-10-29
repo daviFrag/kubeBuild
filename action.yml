@@ -15,6 +15,18 @@ inputs:
     description: 'Kubernetes cluster password'
   KUBE_CERTIFICATE:
     description: 'Cluster CA certificate'
+  KUBE_NAMESPACE:
+    description: 'Kubernetes namespace'
+  IMAGE_NAME:
+    description: 'Image github docker registry'
+  GITHUB_USERNAME:
+    description: 'Github username'
+  GITHUB_TOKEN:
+    description: 'Github token'
+  GITHUB_EMAIL:
+    description: 'Github user email'
+  GITHUB_SHA:
+    description: 'Github commit sha'
 runs:
   using: 'docker'
   image: 'Dockerfile'
