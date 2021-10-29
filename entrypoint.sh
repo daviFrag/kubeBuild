@@ -40,12 +40,12 @@ fi
 
 echo "/usr/local/bin/kubectl" >> $GITHUB_PATH
 
-if [ -z "${KUBE_NAMESPACE}" -o -z "${IMAGE_NAME}" -o -z "${GITHUB_USERNAME}" -o -z "${GITHUB_TOKEN}" -o -z "${GITHUB_EMAIL}" -o -z "${GITHUB_SHA}" ]; then
+if [ -z "${KUBE_NAMESPACE}" -o -z "${IMAGE_NAME}" -o -z "${GITHUB_TOKEN}" -o -z "${GITHUB_EMAIL}" -o -z "${GITHUB_SHA}" ]; then
     echo "No config found. Please provide KUBE_NAMESPACE, IMAGE_NAME, GITHUB_TOKEN, GITHUB_EMAIL, GITHUB_SHA and GITHUB_USERNAME. Exiting..."
     echo "${KUBE_NAMESPACE} ${IMAGE_NAME} ${GITHUB_USERNAME} ${GITHUB_TOKEN} ${GITHUB_EMAIL} ${GITHUB_SHA} ${GITHUB_REPOSITORY}"
     exit 1
 fi
     
 
-kubectl create secret docker-registry ${IMAGE_NAME}-${KUBE_NAMESPACE} --docker-server=https://ghcr.io --docker-username="${GITHUB_USERNAME}" --docker-password="${GITHUB_TOKEN}" --docker-email="${GITHUB_EMAIL}" -o yaml --dry-run | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
-helm upgrade ${KUBE_NAMESPACE} ./deploy --install --set-string --set image.repository=ghcr.io/${GITHUB_USERNAME}/${IMAGE_NAME}@sha256:${GITHUB_SHA} --namespace="${KUBE_NAMESPACE}" --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} --timeout 30m0s
+kubectl create secret docker-registry ${IMAGE_NAME}-${KUBE_NAMESPACE} --docker-server=https://ghcr.io --docker-username="Startup-ZGproject" --docker-password="${GITHUB_TOKEN}" --docker-email="${GITHUB_EMAIL}" -o yaml --dry-run | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
+helm upgrade ${KUBE_NAMESPACE} ./deploy --install --set-string --set image.repository=ghcr.io/${GITHUB_REPOSITORY}@sha256:${GITHUB_SHA} --namespace="${KUBE_NAMESPACE}" --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} --timeout 30m0s
