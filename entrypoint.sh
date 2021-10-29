@@ -40,4 +40,10 @@ fi
 
 echo "/usr/local/bin/kubectl" >> $GITHUB_PATH
 
-kubectl $*
+if [ -z "${KUBE_NAMESPACE}" || -z "${IMAGE_NAME}" || -z "${GITHUB_USERNAME}" || -z "${GITHUB_TOKEN}" || -z "${GITHUB_EMAIL}" || -z "${GITHUB_SHA}"]; then
+    echo "No config found. Please provide KUBE_NAMESPACE, IMAGE_NAME, GITHUB_TOKEN, GITHUB_EMAIL, GITHUB_SHA and GITHUB_USERNAME. Exiting..."
+    exit 1
+    
+
+kubectl create secret docker-registry ${IMAGE_NAME}-${KUBE_NAMESPACE} --docker-server=https://ghcr.io --docker-username="${GITHUB_USERNAME}" --docker-password="${GITHUB_TOKEN}" --docker-email="${GITHUB_EMAIL}" -o yaml --dry-run | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
+helm upgrade ${KUBE_NAMESPACE} ./deploy --install --set-string --set image.repository=ghcr.io/${GITHUB_USERNAME}/${IMAGE_NAME}@sha256:${GITHUB_SHA} --namespace="${KUBE_NAMESPACE}" --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} --timeout 30m0s
