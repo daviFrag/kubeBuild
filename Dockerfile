@@ -12,10 +12,9 @@ RUN chmod +x /entrypoint.sh && \
     rm -rf /var/cache/apk/*
 
 RUN curl https://baltocdn.com/helm/signing.asc | apt-key add -
-    apt-get install apt-transport-https --yes
-    echo "deb https://baltocdn.com/helm/stable/debian/ all main" | tee /etc/apt/sources.list.d/helm-stable-debian.list
-    apt-get update
-    apt-get install helm
+RUN apt-get install apt-transport-https --yes
+RUN echo "deb https://baltocdn.com/helm/stable/debian/ all main" | tee /etc/apt/sources.list.d/helm-stable-debian.list
+RUN apt-get update && apt-get install helm
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["cluster-info"]
