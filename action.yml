@@ -23,8 +23,6 @@ inputs:
     description: 'Github token'
   DOCKER_USERNAME:
     description: 'Docker username'
-  GITHUB_EMAIL:
-    description: 'Github email'
     
 runs:
   using: 'docker'
