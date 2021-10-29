@@ -19,6 +19,10 @@ inputs:
     description: 'Kubernetes namespace'
   IMAGE_NAME:
     description: 'Image github docker registry'
+  GITHUB_TOKEN:
+    description: 'Github token'
+  GITHUB_EMAIL:
+    description: 'Github email'
     
 runs:
   using: 'docker'
