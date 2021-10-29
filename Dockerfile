@@ -11,9 +11,11 @@ RUN chmod +x /entrypoint.sh && \
     chmod +x /usr/local/bin/kubectl && \
     rm -rf /var/cache/apk/*
 
-RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && \
-    chmod 700 get_helm.sh && \
-    ./get_helm.sh
+RUN curl https://baltocdn.com/helm/signing.asc | apt-key add -
+    apt-get install apt-transport-https --yes
+    echo "deb https://baltocdn.com/helm/stable/debian/ all main" | tee /etc/apt/sources.list.d/helm-stable-debian.list
+    apt-get update
+    apt-get install helm
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["cluster-info"]
