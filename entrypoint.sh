@@ -46,6 +46,6 @@ if [ -z "${KUBE_NAMESPACE}" -o -z "${IMAGE_NAME}" -o -z "${GITHUB_TOKEN}" -o -z 
     exit 1
 fi
     
-kubectl create namespace ${KUBE_NAMESPACE}
+kubectl create namespace <add-namespace-here> --dry-run=client -o yaml | kubectl apply -f -
 kubectl create secret docker-registry ${IMAGE_NAME}-${KUBE_NAMESPACE} --docker-server=https://ghcr.io --docker-username="Startup-ZGproject" --docker-password="${GITHUB_TOKEN}" --docker-email="${GITHUB_EMAIL}" -o yaml --dry-run | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
 helm upgrade ${KUBE_NAMESPACE} ./deploy --install --set-string --set image.repository=ghcr.io/${GITHUB_REPOSITORY}@sha256:${GITHUB_SHA} --namespace="${KUBE_NAMESPACE}" --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} --timeout 30m0s
