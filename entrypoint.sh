@@ -45,7 +45,9 @@ if [ -z "${KUBE_NAMESPACE}" -o -z "${IMAGE_NAME}" -o -z "${GITHUB_TOKEN}" -o -z 
     echo "${KUBE_NAMESPACE} ${IMAGE_NAME} ${GITHUB_USERNAME} ${GITHUB_TOKEN} ${GITHUB_EMAIL} ${GITHUB_SHA} ${GITHUB_REPOSITORY}"
     exit 1
 fi
-    
+
+
+# --set-string --set image.repository=ghcr.io/${GITHUB_REPOSITORY}@sha256:${GITHUB_SHA} --namespace="${KUBE_NAMESPACE}" --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} --timeout 30m0s
 kubectl create namespace ${KUBE_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
 kubectl create secret docker-registry ${IMAGE_NAME}-${KUBE_NAMESPACE} --docker-server=https://ghcr.io --docker-username="Startup-ZGproject" --docker-password="${GITHUB_TOKEN}" --docker-email="${GITHUB_EMAIL}" -o yaml --dry-run=client | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
-helm upgrade production ./deploy --install --set-string --set image.repository=ghcr.io/${GITHUB_REPOSITORY}@sha256:${GITHUB_SHA} --namespace="${KUBE_NAMESPACE}" --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} --timeout 30m0s
+helm upgrade production ./deploy --install
