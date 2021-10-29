@@ -11,6 +11,7 @@ RUN chmod +x /entrypoint.sh && \
     chmod +x /usr/local/bin/kubectl && \
     rm -rf /var/cache/apk/*
 
+RUN apk add --no-cache bash
 RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
 ENTRYPOINT ["/entrypoint.sh"]
