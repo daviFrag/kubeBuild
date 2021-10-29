@@ -40,7 +40,7 @@ fi
 
 echo "/usr/local/bin/kubectl" >> $GITHUB_PATH
 
-if [ -z "${KUBE_NAMESPACE}" || -z "${IMAGE_NAME}" || -z "${GITHUB_USERNAME}" || -z "${GITHUB_TOKEN}" || -z "${GITHUB_EMAIL}" || -z "${GITHUB_SHA}"]; then
+if [ -z "${KUBE_NAMESPACE}" -o -z "${IMAGE_NAME}" -o -z "${GITHUB_USERNAME}" -o -z "${GITHUB_TOKEN}" -o -z "${GITHUB_EMAIL}" -o -z "${GITHUB_SHA}" ]; then
     echo "No config found. Please provide KUBE_NAMESPACE, IMAGE_NAME, GITHUB_TOKEN, GITHUB_EMAIL, GITHUB_SHA and GITHUB_USERNAME. Exiting..."
     exit 1
 fi
