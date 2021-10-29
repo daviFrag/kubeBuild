@@ -48,5 +48,5 @@ fi
 
 
 kubectl create namespace ${KUBE_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
-kubectl create secret docker-registry ${IMAGE_NAME}-${KUBE_NAMESPACE} --docker-server=ghcr.io --docker-username="startup-zgproject" --docker-password="${GITHUB_TOKEN}" --docker-email="${GITHUB_EMAIL}" -o yaml --dry-run=client | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
+kubectl create secret docker-registry ${IMAGE_NAME}-${KUBE_NAMESPACE} --docker-server=ghcr.io --docker-username="daviFrag" --docker-password="${GITHUB_TOKEN}" --docker-email="${GITHUB_EMAIL}" -o yaml --dry-run=client | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
 helm upgrade production ./deploy --install --set image.repository=ghcr.io/startup-zgproject/${IMAGE_NAME}:${GITHUB_SHA} --namespace="${KUBE_NAMESPACE}" --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} --timeout 30m0s
