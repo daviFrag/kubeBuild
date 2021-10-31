@@ -48,5 +48,15 @@ fi
 
 
 kubectl create namespace ${KUBE_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
+helm upgrade --install \
+    --set fullnameOverride="${KUBE_NAMESPACE}-postgresql" \
+    --set postgresqlUsername="$POSTGRES_USER" \
+    --set postgresqlPassword="$POSTGRES_PASSWORD" \
+    --set postgresqlDatabase="$POSTGRES_DB" \
+    --set image.tag="$POSTGRES_VERSION" \
+    --namespace="$KUBE_NAMESPACE" \
+    "${KUBE_NAMESPACE}-postgresql" \
+    bitnami/postgresql
+
 kubectl create secret docker-registry ${IMAGE_NAME}-${KUBE_NAMESPACE} --docker-server=ghcr.io --docker-username="${DOCKER_USERNAME}" --docker-password="${GITHUB_TOKEN}" -o yaml --dry-run=client | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
 helm upgrade production ./deploy --install --set image.repository=ghcr.io/startup-zgproject/${IMAGE_NAME}:${GITHUB_SHA} --namespace="${KUBE_NAMESPACE}" --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} --timeout 30m0s
