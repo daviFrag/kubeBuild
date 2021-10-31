@@ -60,7 +60,8 @@ helm upgrade --install \
     bitnami/postgresql
   
 helm upgrade --install \
-    --set auth.username=minerva,auth.password=minerva \
+    --set auth.username="minerva" \
+    --set auth.password="minerva" \
     "${KUBE_NAMESPACE}-rabbitmq" \
     bitnami/rabbitmq
     
