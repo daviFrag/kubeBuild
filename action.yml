@@ -28,7 +28,7 @@ inputs:
   POSTGRES_DB:
     description: 'Postgres db'
   POSTGRES_VERSION:
-    description: 'Postgres version
+    description: 'Postgres version'
     
 runs:
   using: 'docker'
