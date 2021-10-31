@@ -58,6 +58,12 @@ helm upgrade --install \
     --namespace="$KUBE_NAMESPACE" \
     "${KUBE_NAMESPACE}-postgresql" \
     bitnami/postgresql
-
+    
+helm upgrade --install \
+    --set auth.username="minerva" \
+    --set auth.password="123456" \
+    "${KUBE_NAMESPACE}-rabbitmq" \
+    bitnami/rabbitmq
+    
 kubectl create secret docker-registry ${IMAGE_NAME}-${KUBE_NAMESPACE} --docker-server=ghcr.io --docker-username="${DOCKER_USERNAME}" --docker-password="${GITHUB_TOKEN}" -o yaml --dry-run=client | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
 helm upgrade production ./deploy --install --set image.repository=ghcr.io/startup-zgproject/${IMAGE_NAME}:${GITHUB_SHA} --namespace="${KUBE_NAMESPACE}" --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} --timeout 30m0s
