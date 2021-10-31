@@ -51,10 +51,10 @@ kubectl create namespace ${KUBE_NAMESPACE} --dry-run=client -o yaml | kubectl ap
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm upgrade --install \
     --set fullnameOverride="${KUBE_NAMESPACE}-postgresql" \
-    --set postgresqlUsername="$POSTGRES_USER" \
-    --set postgresqlPassword="$POSTGRES_PASSWORD" \
-    --set postgresqlDatabase="$POSTGRES_DB" \
-    --set image.tag="$POSTGRES_VERSION" \
+    --set postgresqlUsername="${POSTGRES_USER}" \
+    --set postgresqlPassword="${POSTGRES_PASSWORD}" \
+    --set postgresqlDatabase="${POSTGRES_DB}" \
+    --set image.tag="${POSTGRES_VERSION}" \
     --namespace="$KUBE_NAMESPACE" \
     "${KUBE_NAMESPACE}-postgresql" \
     bitnami/postgresql
