@@ -62,6 +62,7 @@ helm upgrade --install \
 helm upgrade --install \
     --set auth.username="minerva" \
     --set auth.password="minerva" \
+    --namespace="$KUBE_NAMESPACE" \
     "${KUBE_NAMESPACE}-rabbitmq" \
     bitnami/rabbitmq
     
