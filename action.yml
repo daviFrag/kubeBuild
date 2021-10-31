@@ -22,11 +22,13 @@ inputs:
   GITHUB_TOKEN:
     description: 'Github token'
   POSTGRES_USER:
-    description: 'Docker username'
+    description: 'Postgres username'
   POSTGRES_PASSWORD:
-    description: 'Docker username'
+    description: 'Postgres password'
   POSTGRES_DB:
-    description: 'Docker username'
+    description: 'Postgres db'
+  POSTGRES_VERSION:
+    description: 'Postgres version
     
 runs:
   using: 'docker'
