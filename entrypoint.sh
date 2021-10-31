@@ -59,7 +59,7 @@ helm upgrade --install \
     "${KUBE_NAMESPACE}-postgresql" \
     bitnami/postgresql
   
-$RABBITMQ_ERLANG_COOKIE=export RABBITMQ_ERLANG_COOKIE=$(kubectl get secret --namespace "default" production-rabbitmq -o jsonpath="{.data.rabbitmq-erlang-cookie}" | base64 --decode)
+export RABBITMQ_ERLANG_COOKIE=$(kubectl get secret --namespace "default" production-rabbitmq -o jsonpath="{.data.rabbitmq-erlang-cookie}" | base64 --decode)
 
 helm upgrade --install \
     --set auth.username="minerva" \
