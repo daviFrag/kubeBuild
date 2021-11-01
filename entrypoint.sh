@@ -62,7 +62,7 @@ helm upgrade --install \
 export check_rabbit=$(helm list --namespace=${KUBE_NAMESPACE} | grep -c rabbitmq)
 echo $check_rabbit
 
-if [ check_rabbit==0 ]; then
+if [ check_rabbit -eq 0 ]; then
     helm upgrade --install \
     --set auth.username="minerva" \
     --set auth.password="minerva" \
