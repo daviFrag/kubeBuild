@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export KUBE_NAMESPACE=${GITHUB_REF##*/}
+
 set -e
 
 if [ ! -d "$HOME/.kube" ]; then
