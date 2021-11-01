@@ -27,6 +27,12 @@ inputs:
     description: 'Postgres db'
   POSTGRES_VERSION:
     description: 'Postgres version'
+  RABBITMQ_VHOST:
+    description: 'Rabbit vhost'
+  RABBITMQ_USER: 
+    description: 'Rabbit user'
+  RABBITMQ_PSW: 
+    description: 'Rabbit psw'
     
 runs:
   using: 'docker'
