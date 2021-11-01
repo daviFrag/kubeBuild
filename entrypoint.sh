@@ -58,7 +58,8 @@ helm upgrade --install \
     --namespace="$KUBE_NAMESPACE" \
     "${KUBE_NAMESPACE}-postgresql" \
     bitnami/postgresql
-
+    
+helm list --namespace=${KUBE_NAMESPACE}
 check_rabbit=$(helm list --namespace=${KUBE_NAMESPACE} | grep -c rabbitmq)
 if [ check_rabbit==0 ]; then
     helm upgrade --install \
