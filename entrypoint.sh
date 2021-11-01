@@ -85,6 +85,9 @@ helm upgrade production ./deploy --install \
     --namespace="${KUBE_NAMESPACE}" \
     --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} \
     --set application.name="${KUBE_NAMESPACE}" \
+    --set postgresqlUsername="${POSTGRES_USER}" \
+    --set-string postgresqlPassword="${POSTGRES_PASSWORD}" \
+    --set postgresqlDatabase="${POSTGRES_DB}" \
     --set rabbtimq.user=""${RABBITMQ_USER}"" \
     --set-string rabbtimq.psw=""${RABBITMQ_PSW}"" \
     --set rabbtimq.vhost=""${RABBITMQ_VHOST}"" \
