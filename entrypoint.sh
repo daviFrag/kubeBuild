@@ -74,5 +74,15 @@ if [ check_rabbit -eq 0 ]; then
     bitnami/rabbitmq
 fi
 
-kubectl create secret docker-registry ${IMAGE_NAME}-${KUBE_NAMESPACE} --docker-server=ghcr.io --docker-username="${DOCKER_USERNAME}" --docker-password="${GITHUB_TOKEN}" -o yaml --dry-run=client | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
-helm upgrade production ./deploy --install --set image.repository=ghcr.io/startup-zgproject/${IMAGE_NAME}:${GITHUB_SHA} --namespace="${KUBE_NAMESPACE}" --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} --timeout 30m0s
+kubectl create secret \
+    docker-registry ${IMAGE_NAME}-${KUBE_NAMESPACE} \
+    --docker-server=ghcr.io \
+    --docker-username="${DOCKER_USERNAME}" \
+    --docker-password="${GITHUB_TOKEN}" -o yaml --dry-run=client | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
+    
+helm upgrade production ./deploy --install \
+    --set image.repository=ghcr.io/startup-zgproject/${IMAGE_NAME}:${GITHUB_SHA} \
+    --namespace="${KUBE_NAMESPACE}" \
+    --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} \
+    --set application.name="${KUBE_NAMESPACE}" \
+    --timeout 30m0s
