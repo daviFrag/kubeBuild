@@ -1,6 +1,7 @@
 #!/bin/sh
 
-export KUBE_NAMESPACE=${GITHUB_REF##*/,,}
+export KUBE_NAMESPACE=${GITHUB_REF##*/}
+$KUBE_NAMESPACE"${KUBE_NAMESPACE,,}"
 
 set -e
 
