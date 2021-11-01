@@ -59,7 +59,7 @@ helm upgrade --install \
     "${KUBE_NAMESPACE}-postgresql" \
     bitnami/postgresql
 
-check_rabbit=helm list --namespace=${KUBE_NAMESPACE} | grep -c rabbitmq
+check_rabbit=$(helm list --namespace=${KUBE_NAMESPACE} | grep -c rabbitmq)
 if [ check_rabbit==0 ]; then
     helm upgrade --install \
     --set auth.username="minerva" \
