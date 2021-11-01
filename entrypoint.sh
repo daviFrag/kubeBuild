@@ -1,7 +1,7 @@
 #!/bin/sh
 
-export KUBE_NAMESPACE=${GITHUB_REF##*/}
-KUBE_NAMESPACE=$(KUBE_NAMESPACE,,)
+BRANCH_NAME=${GITHUB_REF##*/}
+KUBE_NAMESPACE=$(echo $BRANCH_NAME | tr '[:upper:]' '[:lower:]')
 
 set -e
 
