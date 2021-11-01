@@ -55,7 +55,7 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm upgrade --install \
     --set fullnameOverride="${KUBE_NAMESPACE}-postgresql" \
     --set postgresqlUsername="${POSTGRES_USER}" \
-    --set postgresqlPassword="${POSTGRES_PASSWORD}" \
+    --set-string postgresqlPassword="${POSTGRES_PASSWORD}" \
     --set postgresqlDatabase="${POSTGRES_DB}" \
     --set image.tag="${POSTGRES_VERSION}" \
     --namespace="$KUBE_NAMESPACE" \
@@ -66,9 +66,9 @@ export check_rabbit=$(helm list --namespace=${KUBE_NAMESPACE} | grep -c rabbitmq
 
 if [ $check_rabbit == 0 ]; then
     helm upgrade --install \
-    --set auth.username="minerva" \
-    --set auth.password="minerva" \
-    --set extraConfiguration="default_vhost=myvhost" \
+    --set auth.username="${RABBITMQ_USER}" \
+    --set-string auth.password="${RABBITMQ_PSW}" \
+    --set extraConfiguration="default_vhost="${RABBITMQ_VHOST}"t" \
     --namespace="$KUBE_NAMESPACE" \
     "${KUBE_NAMESPACE}-rabbitmq" \
     bitnami/rabbitmq
@@ -85,4 +85,7 @@ helm upgrade production ./deploy --install \
     --namespace="${KUBE_NAMESPACE}" \
     --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} \
     --set application.name="${KUBE_NAMESPACE}" \
+    --set rabbtimq.user=""${RABBITMQ_USER}"" \
+    --set-string rabbtimq.psw=""${RABBITMQ_PSW}"" \
+    --set rabbtimq.vhost=""${RABBITMQ_VHOST}"" \
     --timeout 30m0s
