@@ -88,7 +88,7 @@ helm upgrade production ./deploy --install \
     --set postgresqlUsername="${POSTGRES_USER}" \
     --set-string postgresqlPassword="${POSTGRES_PASSWORD}" \
     --set postgresqlDatabase="${POSTGRES_DB}" \
-    --set rabbtimq.user=""${RABBITMQ_USER}"" \
-    --set-string rabbtimq.psw=""${RABBITMQ_PSW}"" \
-    --set rabbtimq.vhost=""${RABBITMQ_VHOST}"" \
+    --set rabbitmq.user=""${RABBITMQ_USER}"" \
+    --set-string rabbitmq.psw=""${RABBITMQ_PSW}"" \
+    --set rabbitmq.vhost=""${RABBITMQ_VHOST}"" \
     --timeout 30m0s
