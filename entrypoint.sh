@@ -87,7 +87,7 @@ kubectl create secret \
 helm upgrade ${KUBE_NAMESPACE} ./deploy --install \
     --set image.repository=${IMAGE_LINK} \
     --namespace="${KUBE_NAMESPACE}" \
-    --set url=${LINK} \
+    --set url=${URL} \
     --set image.secret=${TYPE}-${KUBE_NAMESPACE} \
     --set application.name="${KUBE_NAMESPACE}" \
     --set postgresqlUsername="${POSTGRES_USER}" \
