@@ -46,10 +46,10 @@ fi
 echo "/usr/local/bin/kubectl" >> $GITHUB_PATH
 
 if [ ${DELETE} == "true" ]; then
-    helm uninstall ${KUBE_NAMESPACE}
+    helm uninstall ${KUBE_NAMESPACE} --namespace="$KUBE_NAMESPACE"
     if [ $TYPE == "django" ]; then
-        helm uninstall "${KUBE_NAMESPACE}-postgresql"
-        helm uninstall "${KUBE_NAMESPACE}-rabbitmq"
+        helm uninstall "${KUBE_NAMESPACE}-postgresql" --namespace="$KUBE_NAMESPACE"
+        helm uninstall "${KUBE_NAMESPACE}-rabbitmq" --namespace="$KUBE_NAMESPACE"
     fi
     kubectl delete namespace ${KUBE_NAMESPACE}
 fi
