@@ -5,6 +5,8 @@ branding:
   icon: 'terminal'
   color: 'blue'
 inputs:
+  TYPE:
+    description: 'Deploy type'
   KUBE_CONFIG:
     description: 'Kubernetes configuration'
   KUBE_HOST:
