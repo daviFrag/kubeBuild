@@ -45,6 +45,15 @@ fi
 
 echo "/usr/local/bin/kubectl" >> $GITHUB_PATH
 
+if [ ${DELETE} == "true" ]; then
+    helm uninstall ${KUBE_NAMESPACE}
+    if [ $TYPE == "django" ]; then
+        helm uninstall "${KUBE_NAMESPACE}-postgresql"
+        helm uninstall "${KUBE_NAMESPACE}-rabbitmq"
+    fi
+    kubectl delete namespace ${KUBE_NAMESPACE}
+fi
+
 if [ -z "${KUBE_NAMESPACE}" -o -z "${IMAGE_LINK}" -o -z "${GITHUB_TOKEN}" -o -z "${GITHUB_SHA}" ]; then
     echo "No config found. Please provide KUBE_NAMESPACE, IMAGE_NAME, GITHUB_TOKEN, GITHUB_EMAIL, GITHUB_SHA and GITHUB_USERNAME. Exiting..."
     exit 1
