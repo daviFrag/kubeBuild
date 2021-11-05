@@ -3,6 +3,8 @@
 # BRANCH_NAME=${GITHUB_REF##*/}
 # KUBE_NAMESPACE=$(echo $BRANCH_NAME | tr '[:upper:]' '[:lower:]')
 
+KUBE_NAMESPACE= "$( echo $META_DATA | jq -r '.org.opencontainers.image.title' )-$( echo $META_DATA | jq -r '.org.opencontainers.image.version' )"
+
 set -e
 
 if [ ! -d "$HOME/.kube" ]; then
