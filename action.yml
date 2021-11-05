@@ -17,6 +17,8 @@ inputs:
     description: 'Kubernetes cluster password'
   KUBE_CERTIFICATE:
     description: 'Cluster CA certificate'
+  KUBE_NAMESPACE:
+    description: 'Kubernetes namespace'
   IMAGE_LINK:
     description: 'Image github docker registry'
   GITHUB_TOKEN:
