@@ -84,7 +84,7 @@ kubectl create secret \
     --docker-password="${GITHUB_TOKEN}" -o yaml --dry-run=client | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
     
 helm upgrade ${KUBE_NAMESPACE} ./deploy --install \
-    --set image.repository=ghcr.io/startup-zgproject/${IMAGE_NAME}:${GITHUB_SHA} \
+    --set image.repository=${IMAGE_LINK} \
     --namespace="${KUBE_NAMESPACE}" \
     --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} \
     --set application.name="${KUBE_NAMESPACE}" \
