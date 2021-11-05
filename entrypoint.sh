@@ -51,27 +51,30 @@ fi
 
 
 kubectl create namespace ${KUBE_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm upgrade --install \
-    --set fullnameOverride="${KUBE_NAMESPACE}-postgresql" \
-    --set postgresqlUsername="${POSTGRES_USER}" \
-    --set-string postgresqlPassword="${POSTGRES_PASSWORD}" \
-    --set postgresqlDatabase="${POSTGRES_DB}" \
-    --set image.tag="${POSTGRES_VERSION}" \
-    --namespace="$KUBE_NAMESPACE" \
-    "${KUBE_NAMESPACE}-postgresql" \
-    bitnami/postgresql
-    
-export check_rabbit=$(helm list --namespace=${KUBE_NAMESPACE} | grep -c rabbitmq)
 
-if [ $check_rabbit == 0 ]; then
+if [ $TYPE == "django" ]; then
+    helm repo add bitnami https://charts.bitnami.com/bitnami
     helm upgrade --install \
-    --set auth.username="${RABBITMQ_USER}" \
-    --set-string auth.password="${RABBITMQ_PSW}" \
-    --set extraConfiguration="default_vhost="${RABBITMQ_VHOST}"t" \
-    --namespace="$KUBE_NAMESPACE" \
-    "${KUBE_NAMESPACE}-rabbitmq" \
-    bitnami/rabbitmq
+        --set fullnameOverride="${KUBE_NAMESPACE}-postgresql" \
+        --set postgresqlUsername="${POSTGRES_USER}" \
+        --set-string postgresqlPassword="${POSTGRES_PASSWORD}" \
+        --set postgresqlDatabase="${POSTGRES_DB}" \
+        --set image.tag="${POSTGRES_VERSION}" \
+        --namespace="$KUBE_NAMESPACE" \
+        "${KUBE_NAMESPACE}-postgresql" \
+        bitnami/postgresql
+
+    export check_rabbit=$(helm list --namespace=${KUBE_NAMESPACE} | grep -c rabbitmq)
+
+    if [ $check_rabbit == 0 ]; then
+        helm upgrade --install \
+        --set auth.username="${RABBITMQ_USER}" \
+        --set-string auth.password="${RABBITMQ_PSW}" \
+        --set extraConfiguration="default_vhost="${RABBITMQ_VHOST}"t" \
+        --namespace="$KUBE_NAMESPACE" \
+        "${KUBE_NAMESPACE}-rabbitmq" \
+        bitnami/rabbitmq
+    fi
 fi
 
 kubectl create secret \
@@ -80,7 +83,7 @@ kubectl create secret \
     --docker-username="${DOCKER_USERNAME}" \
     --docker-password="${GITHUB_TOKEN}" -o yaml --dry-run=client | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
     
-helm upgrade production ./deploy --install \
+helm upgrade ${KUBE_NAMESPACE} ./deploy --install \
     --set image.repository=ghcr.io/startup-zgproject/${IMAGE_NAME}:${GITHUB_SHA} \
     --namespace="${KUBE_NAMESPACE}" \
     --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} \
