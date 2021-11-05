@@ -1,7 +1,7 @@
 #!/bin/sh
 
-BRANCH_NAME=${GITHUB_REF##*/}
-KUBE_NAMESPACE=$(echo $BRANCH_NAME | tr '[:upper:]' '[:lower:]')
+# BRANCH_NAME=${GITHUB_REF##*/}
+# KUBE_NAMESPACE=$(echo $BRANCH_NAME | tr '[:upper:]' '[:lower:]')
 
 set -e
 
@@ -43,9 +43,8 @@ fi
 
 echo "/usr/local/bin/kubectl" >> $GITHUB_PATH
 
-if [ -z "${KUBE_NAMESPACE}" -o -z "${IMAGE_NAME}" -o -z "${GITHUB_TOKEN}" -o -z "${GITHUB_SHA}" ]; then
+if [ -z "${KUBE_NAMESPACE}" -o -z "${IMAGE_LINK}" -o -z "${GITHUB_TOKEN}" -o -z "${GITHUB_SHA}" ]; then
     echo "No config found. Please provide KUBE_NAMESPACE, IMAGE_NAME, GITHUB_TOKEN, GITHUB_EMAIL, GITHUB_SHA and GITHUB_USERNAME. Exiting..."
-    echo "${KUBE_NAMESPACE} ${IMAGE_NAME} ${GITHUB_USERNAME} ${GITHUB_TOKEN} ${GITHUB_SHA} ${GITHUB_REPOSITORY}"
     exit 1
 fi
 
@@ -78,15 +77,15 @@ if [ $TYPE == "django" ]; then
 fi
 
 kubectl create secret \
-    docker-registry ${IMAGE_NAME}-${KUBE_NAMESPACE} \
+    docker-registry ${TYPE}-${KUBE_NAMESPACE} \
     --docker-server=ghcr.io \
     --docker-username="${DOCKER_USERNAME}" \
     --docker-password="${GITHUB_TOKEN}" -o yaml --dry-run=client | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
     
 helm upgrade ${KUBE_NAMESPACE} ./deploy --install \
-    --set image.repository=${IMAGE_LINK} \
+    --set image.repository=ghcr.io/startup-zgproject/${IMAGE_NAME}:${GITHUB_SHA} \
     --namespace="${KUBE_NAMESPACE}" \
-    --set image.secret=${IMAGE_NAME}-${KUBE_NAMESPACE} \
+    --set image.secret=${TYPE}-${KUBE_NAMESPACE} \
     --set application.name="${KUBE_NAMESPACE}" \
     --set postgresqlUsername="${POSTGRES_USER}" \
     --set-string postgresqlPassword="${POSTGRES_PASSWORD}" \
