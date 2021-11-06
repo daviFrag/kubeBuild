@@ -72,7 +72,7 @@ if [ $TYPE == "django" ]; then
         --set postgresqlDatabase="${POSTGRES_DB}" \
         --set image.tag="${POSTGRES_VERSION}" \
         --namespace="$KUBE_NAMESPACE" \
-        --set volumePermissions.Enabled=true \
+        --set volumePermissions.enabled=true \
         "${KUBE_NAMESPACE}-postgresql" \
         bitnami/postgresql
 
@@ -83,7 +83,7 @@ if [ $TYPE == "django" ]; then
         --set auth.username="${RABBITMQ_USER}" \
         --set-string auth.password="${RABBITMQ_PSW}" \
         --set extraConfiguration="default_vhost=${RABBITMQ_VHOST}" \
-         --set volumePermissions.Enabled=true \
+         --set volumePermissions.enabled=true \
         --namespace="$KUBE_NAMESPACE" \
         "${KUBE_NAMESPACE}-rabbitmq" \
         bitnami/rabbitmq
