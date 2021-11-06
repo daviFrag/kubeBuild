@@ -72,6 +72,7 @@ if [ $TYPE == "django" ]; then
         --set postgresqlDatabase="${POSTGRES_DB}" \
         --set image.tag="${POSTGRES_VERSION}" \
         --namespace="$KUBE_NAMESPACE" \
+        --set volumePermissions.Enabled=true \
         "${KUBE_NAMESPACE}-postgresql" \
         bitnami/postgresql
 
