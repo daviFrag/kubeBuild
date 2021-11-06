@@ -81,7 +81,7 @@ if [ $TYPE == "django" ]; then
         helm upgrade --install \
         --set auth.username="${RABBITMQ_USER}" \
         --set-string auth.password="${RABBITMQ_PSW}" \
-        --set extraConfiguration="default_vhost="${RABBITMQ_VHOST}"t" \
+        --set extraConfiguration="default_vhost=${RABBITMQ_VHOST}" \
         --namespace="$KUBE_NAMESPACE" \
         "${KUBE_NAMESPACE}-rabbitmq" \
         bitnami/rabbitmq
