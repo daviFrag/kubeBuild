@@ -83,7 +83,7 @@ if [ $TYPE == "django" ]; then
         --set-string auth.password="${RABBITMQ_PSW}" \
         --set extraConfiguration="default_vhost=${RABBITMQ_VHOST}" \
         --namespace="$KUBE_NAMESPACE" \
-        "${KUBE_NAMESPACE}-rabbitmq" \
+        "${KUBE_NAMESPACE}" \
         bitnami/rabbitmq
     fi
 fi
