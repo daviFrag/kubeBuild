@@ -52,7 +52,7 @@ if [ ${DELETE} == "true" ]; then
         helm uninstall "${KUBE_NAMESPACE}-rabbitmq" --namespace="$KUBE_NAMESPACE"
     fi
     kubectl delete namespace ${KUBE_NAMESPACE}
-    exit 1
+    exit 0
 fi
 
 if [ -z "${KUBE_NAMESPACE}" -o -z "${IMAGE_LINK}" -o -z "${GITHUB_TOKEN}" -o -z "${GITHUB_SHA}" ]; then
