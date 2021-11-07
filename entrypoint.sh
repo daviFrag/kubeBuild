@@ -62,8 +62,6 @@ fi
 
 
 kubectl create namespace ${KUBE_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
-kubectl get secret cert-stage-wildcard -n default --export -o yaml | \
-kubectl apply -n ${KUBE_NAMESPACE} -f -
 
 if [ $TYPE == "django" ]; then
     helm repo add bitnami https://charts.bitnami.com/bitnami
