@@ -101,7 +101,7 @@ helm upgrade ${KUBE_NAMESPACE} ./deploy --install \
     --namespace="${KUBE_NAMESPACE}" \
     --set url=${URL} \
     --set image.secret=${TYPE}-${KUBE_NAMESPACE} \
-    --set application.name="${KUBE_NAMESPACE}" \
+    --set-string application.name="${KUBE_NAMESPACE}" \
     --set postgresqlUsername="${POSTGRES_USER}" \
     --set-string postgresqlPassword="${POSTGRES_PASSWORD}" \
     --set postgresqlDatabase="${POSTGRES_DB}" \
