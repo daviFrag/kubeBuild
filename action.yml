@@ -25,6 +25,10 @@ inputs:
     description: 'Image github docker registry'
   GITHUB_TOKEN:
     description: 'Github token'
+  DOCKER_REGISTRY:
+    description: 'Docker registry'
+  DOCKER_USERNAME:
+    description: 'Docker username'
   POSTGRES_USER:
     description: 'Postgres username'
   POSTGRES_PASSWORD:
