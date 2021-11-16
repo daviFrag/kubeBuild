@@ -92,7 +92,7 @@ fi
 
 kubectl create secret \
     docker-registry ${TYPE}-${KUBE_NAMESPACE} \
-    --docker-server=docker.io \
+    --docker-server=${DOCKER_REGISTRY} \
     --docker-username="${DOCKER_USERNAME}" \
     --docker-password="${GITHUB_TOKEN}" -o yaml --dry-run=client | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
     
