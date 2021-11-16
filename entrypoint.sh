@@ -1,10 +1,5 @@
 #!/bin/sh
 
-# BRANCH_NAME=${GITHUB_REF##*/}
-# KUBE_NAMESPACE=$(echo $BRANCH_NAME | tr '[:upper:]' '[:lower:]')
-
-# KUBE_NAMESPACE= "$( echo $META_DATA | jq -r '.org.opencontainers.image.title' )-$( echo $META_DATA | jq -r '.org.opencontainers.image.version' )"
-
 set -e
 
 if [ ! -d "$HOME/.kube" ]; then
@@ -96,6 +91,13 @@ kubectl create secret \
     --docker-username="${DOCKER_USERNAME}" \
     --docker-password="${DOCKER_PASSWORD}" -o yaml --dry-run=client | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
     
+
+if [ $TYPE == "django" ]; then
+    mv $TYPE deploy
+elif [ $TYPE == "nextjs" ]; then
+    mv $TYPE deploy
+fi
+
 helm upgrade ${KUBE_NAMESPACE} ./deploy --install \
     --set image.repository=${IMAGE_LINK} \
     --namespace="${KUBE_NAMESPACE}" \

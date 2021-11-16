@@ -1,5 +1,4 @@
 FROM alpine:3.10.2
-MAINTAINER Davide Frageri <davide.frag@gmail.com>
 
 ARG KUBE_VERSION="1.22.0"
 
