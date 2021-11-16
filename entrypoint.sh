@@ -94,7 +94,7 @@ kubectl create secret \
     docker-registry ${TYPE}-${KUBE_NAMESPACE} \
     --docker-server=${DOCKER_REGISTRY} \
     --docker-username="${DOCKER_USERNAME}" \
-    --docker-password="${GITHUB_TOKEN}" -o yaml --dry-run=client | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
+    --docker-password="${DOCKER_PASSWORD}" -o yaml --dry-run=client | kubectl replace -n "${KUBE_NAMESPACE}" --force -f -
     
 helm upgrade ${KUBE_NAMESPACE} ./deploy --install \
     --set image.repository=${IMAGE_LINK} \
