@@ -23,8 +23,8 @@ inputs:
     description: 'Kubernetes namespace'
   IMAGE_LINK:
     description: 'Image github docker registry'
-  GITHUB_TOKEN:
-    description: 'Github token'
+  DOCKER_PASSWORD:
+    description: 'Docker password'
   DOCKER_REGISTRY:
     description: 'Docker registry'
   DOCKER_USERNAME:
