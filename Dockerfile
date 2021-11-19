@@ -1,10 +1,9 @@
-FROM alpine:3.10.2
+# syntax=docker/dockerfile:1
+FROM ubuntu:20.04
 
 ARG KUBE_VERSION="1.22.0"
 
 COPY entrypoint.sh /entrypoint.sh
-
-RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories
 
 RUN chmod +x /entrypoint.sh && \
     apk add --no-cache --update openssl curl ca-certificates && \
