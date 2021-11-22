@@ -46,5 +46,4 @@ inputs:
     
 runs:
   using: 'docker'
-  image: 'docker://dtzar/helm-kubectl:3.7.1'
-  entrypoint: $GITHUB_ACTION_PATH/entrypoint.sh
+  image: 'Dockerfile'
