@@ -47,5 +47,4 @@ inputs:
 runs:
   using: 'docker'
   image: 'dtzar/helm-kubectl:3.7.1'
-  with:
-    entrypoint: /entrypoint.sh
+  entrypoint: 'entrypoint.sh'
