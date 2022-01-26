@@ -150,5 +150,5 @@ helm upgrade ${KUBE_NAMESPACE} ./deploy --install \
     --set rabbitmq.user=""${RABBITMQ_USER}"" \
     --set-string rabbitmq.psw=""${RABBITMQ_PSW}"" \
     --set rabbitmq.vhost=""${RABBITMQ_VHOST}"" \
-    --set redis.password="${REDIS_PASSWORD}"
+    --set redis.password="${REDIS_PASSWORD}" \
     --timeout 30m0s
