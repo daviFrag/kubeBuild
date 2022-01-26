@@ -43,6 +43,8 @@ inputs:
     description: 'Rabbit user'
   RABBITMQ_PSW: 
     description: 'Rabbit psw'
+  REDIS_PASSWORD:
+    description: 'Redis psw'
     
 runs:
   using: 'docker'
