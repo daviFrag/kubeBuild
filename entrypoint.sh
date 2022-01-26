@@ -46,6 +46,9 @@ if [ ${DELETE} == "true" ]; then
         helm uninstall "${KUBE_NAMESPACE}-postgresql" --namespace="$KUBE_NAMESPACE"
         helm uninstall "${KUBE_NAMESPACE}-rabbitmq" --namespace="$KUBE_NAMESPACE"
     fi
+    if [ $TYPE == "go_graph" ]; then
+        helm uninstall "${KUBE_NAMESPACE}-postgresql" --namespace="$KUBE_NAMESPACE"
+    fi
     kubectl delete namespace ${KUBE_NAMESPACE}
     exit 0
 fi
@@ -85,6 +88,20 @@ if [ $TYPE == "django" ]; then
     fi
 fi
 
+if [ $TYPE == "go_graph" ]; then
+    helm repo add bitnami https://charts.bitnami.com/bitnami
+    helm upgrade --install \
+        --set fullnameOverride="${KUBE_NAMESPACE}-postgresql" \
+        --set postgresqlUsername="${POSTGRES_USER}" \
+        --set-string postgresqlPassword="${POSTGRES_PASSWORD}" \
+        --set postgresqlDatabase="${POSTGRES_DB}" \
+        --set image.tag="${POSTGRES_VERSION}" \
+        --namespace="$KUBE_NAMESPACE" \
+        --set volumePermissions.enabled=true \
+        "${KUBE_NAMESPACE}-postgresql" \
+        bitnami/postgresql
+fi
+
 kubectl create secret \
     docker-registry ${TYPE}-${KUBE_NAMESPACE} \
     --docker-server=${DOCKER_REGISTRY} \
@@ -95,6 +112,8 @@ kubectl create secret \
 if [ $TYPE == "django" ]; then
     mv $TYPE deploy
 elif [ $TYPE == "nextjs" ]; then
+    mv $TYPE deploy
+elif [ $TYPE == "go_graph" ]; then
     mv $TYPE deploy
 fi
 
