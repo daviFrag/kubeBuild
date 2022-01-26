@@ -102,6 +102,7 @@ if [ $TYPE == "go-graph" ]; then
         bitnami/postgresql
 
     helm upgrade --install \
+        --set auth.password="prova" \
         --set cluster.slaveCount=1 \
         --set securityContext.enabled=true \
         --set securityContext.fsGroup=2000 \
