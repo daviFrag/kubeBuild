@@ -117,8 +117,8 @@ if [ $TYPE == "go-graph" ]; then
         --set slave.persistence.path=/data \
         --set slave.persistence.size=8Gi \
         --set slave.persistence.storageClass=manual \
-        --namespace="back-pr-2" \
-        "back-pr-2-redis" \
+        --namespace="${KUBE_NAMESPACE}" \
+        "${KUBE_NAMESPACE}-redis" \
         bitnami/redis
 fi
 
