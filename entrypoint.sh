@@ -113,7 +113,7 @@ if [ $TYPE == "django" ]; then
     mv $TYPE deploy
 elif [ $TYPE == "nextjs" ]; then
     mv $TYPE deploy
-elif [ $TYPE == "go_graph" ]; then
+elif [ $TYPE == "go-graph" ]; then
     mv $TYPE deploy
 fi
 
