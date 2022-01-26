@@ -101,7 +101,7 @@ if [ $TYPE == "go-graph" ]; then
         "${KUBE_NAMESPACE}-postgresql" \
         bitnami/postgresql
 
-    helm install --name "${KUBE_NAMESPACE}-redis" \
+    helm upgrade --install \
         --set cluster.slaveCount=1 \
         --set securityContext.enabled=true \
         --set securityContext.fsGroup=2000 \
@@ -117,8 +117,9 @@ if [ $TYPE == "go-graph" ]; then
         --set slave.persistence.path=/data \
         --set slave.persistence.size=8Gi \
         --set slave.persistence.storageClass=manual \
-        --namespace="$KUBE_NAMESPACE" \
-        stable/redis
+        --namespace="back-pr-2" \
+        "back-pr-2-redis" \
+        bitnami/redis
 fi
 
 kubectl create secret \
