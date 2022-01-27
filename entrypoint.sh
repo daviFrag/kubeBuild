@@ -140,6 +140,7 @@ fi
 
 helm upgrade ${KUBE_NAMESPACE} ./deploy --install \
     --set image.repository=${IMAGE_LINK} \
+    --set image.repository=${IMAGE_GATEWAY} \
     --namespace="${KUBE_NAMESPACE}" \
     --set url=${URL} \
     --set image.secret=${TYPE}-${KUBE_NAMESPACE} \
