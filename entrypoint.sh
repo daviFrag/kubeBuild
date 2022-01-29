@@ -48,6 +48,7 @@ if [ ${DELETE} == "true" ]; then
     fi
     if [ $TYPE == "go-graph" ]; then
         helm uninstall "${KUBE_NAMESPACE}-postgresql" --namespace="$KUBE_NAMESPACE"
+        helm uninstall "${KUBE_NAMESPACE}-redis" --namespace="$KUBE_NAMESPACE"
     fi
     kubectl delete namespace ${KUBE_NAMESPACE}
     exit 0
@@ -102,7 +103,7 @@ if [ $TYPE == "go-graph" ]; then
         bitnami/postgresql
 
     helm upgrade --install \
-        --set auth.password="prova" \
+        --set auth.password="${REDIS_PASSWORD}" \
         --set cluster.slaveCount=1 \
         --set securityContext.enabled=true \
         --set securityContext.fsGroup=2000 \
