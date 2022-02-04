@@ -142,7 +142,7 @@ elif [ $TYPE == "go-graph" ]; then
 fi
 
 helm upgrade ${KUBE_NAMESPACE} ./deploy --install \
-    --set image.repository=${IMAGE_LINK}
+    --set image.repository=${IMAGE_LINK} \
     --set image.users=${IMAGE_USERS} \
     --set image.pi=${IMAGE_PI} \
     --set image.gateway=${IMAGE_GATEWAY} \
