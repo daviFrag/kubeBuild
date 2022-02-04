@@ -54,8 +54,8 @@ if [ ${DELETE} == "true" ]; then
     exit 0
 fi
 
-if [ -z "${KUBE_NAMESPACE}" -o -z "${IMAGE_LINK}" -o -z "${DOCKER_PASSWORD}" -o -z "${GITHUB_SHA}" ]; then
-    echo "No config found. Please provide KUBE_NAMESPACE, IMAGE_LINK, DOCKER_PASSWORD and GITHUB_SHA . Exiting..."
+if [ -z "${KUBE_NAMESPACE}" -o -z "${DOCKER_PASSWORD}" -o -z "${GITHUB_SHA}" ]; then
+    echo "No config found. Please provide KUBE_NAMESPACE, DOCKER_PASSWORD and GITHUB_SHA . Exiting..."
     exit 1
 fi
 
