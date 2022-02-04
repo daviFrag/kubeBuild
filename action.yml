@@ -23,6 +23,10 @@ inputs:
     description: 'Kubernetes namespace'
   IMAGE_LINK:
     description: 'Image github docker registry'
+  IMAGE_USERS:
+    description: 'Image github docker registry'
+  IMAGE_PI:
+    description: 'Image github docker registry'
   IMAGE_GATEWAY:
     description: 'Image gateway github docker registry'
   DOCKER_PASSWORD:
