@@ -66,9 +66,9 @@ if [ $TYPE == "django" ]; then
     helm repo add bitnami https://charts.bitnami.com/bitnami
     helm upgrade --install \
         --set fullnameOverride="${KUBE_NAMESPACE}-postgresql" \
-        --set postgresqlUsername="${POSTGRES_USER}" \
-        --set-string postgresqlPassword="${POSTGRES_PASSWORD}" \
-        --set postgresqlDatabase="${POSTGRES_DB}" \
+        --set auth.username="${POSTGRES_USER}" \
+        --set auth.password="${POSTGRES_PASSWORD}" \
+        --set auth.database="${POSTGRES_DB}" \
         --set image.tag="${POSTGRES_VERSION}" \
         --namespace="$KUBE_NAMESPACE" \
         --set volumePermissions.enabled=true \
@@ -93,9 +93,9 @@ if [ $TYPE == "go-graph" ]; then
     helm repo add bitnami https://charts.bitnami.com/bitnami
     helm upgrade --install \
         --set fullnameOverride="${KUBE_NAMESPACE}-postgresql" \
-        --set postgresqlUsername="${POSTGRES_USER}" \
-        --set-string postgresqlPassword="${POSTGRES_PASSWORD}" \
-        --set postgresqlDatabase="${POSTGRES_DB}" \
+        --set auth.username="${POSTGRES_USER}" \
+        --set auth.password="${POSTGRES_PASSWORD}" \
+        --set auth.database="${POSTGRES_DB}" \
         --set image.tag="${POSTGRES_VERSION}" \
         --namespace="$KUBE_NAMESPACE" \
         --set volumePermissions.enabled=true \
