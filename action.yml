@@ -7,8 +7,8 @@ branding:
 inputs:
   TYPE:
     description: 'Deploy type'
-  DEVELOPMENT:
-    description: 'development tag'
+  ENVIRONMENT:
+    description: 'environment tag'
   LINK:
     description: 'Link to connect the main process'
   KUBE_CONFIG:
