@@ -124,6 +124,44 @@ if [ $TYPE == "go-graph" ]; then
         --namespace="${KUBE_NAMESPACE}" \
         "${KUBE_NAMESPACE}-redis" \
         bitnami/redis
+
+
+    # TODO DA SISTEMARE L'URL O SE NO AGGIUNGERE IL FRONT URL 
+    helm upgrade --install \
+        --set fullnameOverride="$test-postgresql" \
+        --namespace="${KUBE_NAMESPACE}" \
+        --set volumePermissions.enabled=true \
+        "test-postgresql" \
+        bitnami/postgresql
+
+    helm upgrade --install kratos -f oryauth/kratos.yaml \
+        --set kratos.serve.public.base_url="https://${URL}/.ory/kratos/public/" \
+        --set kratos.session.cookie.domain="${URL}" \
+        --set kratos.config.selfservice.default_browser_return_url="https://${URL}" \
+        --set kratos.config.selfservice.whitelisted_return_urls[0]="https://${URL}" \
+        --set kratos.config.selfservice.whitelisted_return_urls[1]="https://${URL}/login" \
+        --set kratos.config.selfservice.flows.login.ui_url="https://${URL}/login" \
+        --set kratos.config.selfservice.flows.settings.ui_url="https://${URL}/settings" \
+        --set kratos.config.selfservice.flows.recovery.ui_url="https://${URL}/recovery" \
+        --set kratos.config.selfservice.flows.verification.ui_url="https://${URL}/verification" \
+        --set kratos.config.selfservice.flows.verification.after.default_browser_return_url="https://${URL}/login" \
+        --set kratos.config.selfservice.flows.logout.ui_url="https://${URL}/logout" \
+        --set kratos.config.selfservice.flows.registration.ui_url="https://${URL}/registration" \
+        --set kratos.config.selfservice.flows.error.ui_url="https://${URL}/error" \
+        --namespace="${KUBE_NAMESPACE}" \
+        ory/kratos
+    
+    helm upgrade --install keto -f oryauth/keto.yaml ory/keto --namespace="${KUBE_NAMESPACE}"
+
+    helm upgrade --install oathkeeper -f oryauth/oathkeeper.yaml \ 
+        --set oathkeeper.config.errors.handlers.redirect.config.to="https://${URL}/login" \
+        --set oathkeeper.config.mutators.id_token.issuer_url="https://${URL}" \
+        --set ingress.proxy.hosts[0].host="${URL}" \
+        --set ingress.api.hosts[0].host="${URL}" \
+        ory/oathkeeper \
+        --namespace="${KUBE_NAMESPACE}"
+
+    
 fi
 
 kubectl create secret \
