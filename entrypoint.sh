@@ -92,6 +92,8 @@ fi
 
 if [ $TYPE == "go-graph" ]; then
     helm repo add bitnami https://charts.bitnami.com/bitnami
+    helm repo add ory https://k8s.ory.sh/helm/charts
+    
     helm upgrade --install \
         --set fullnameOverride="${KUBE_NAMESPACE}-postgresql" \
         --set auth.username="${POSTGRES_USER}" \
