@@ -161,7 +161,7 @@ if [ $TYPE == "go-graph" ]; then
     
     helm upgrade --install keto -f oryauth/keto.yaml ory/keto --namespace="${KUBE_NAMESPACE}"
 
-    helm upgrade --install oathkeeper -f oryauth/oathkeeper.yaml \ 
+    helm upgrade --install oathkeeper -f oryauth/oathkeeper.yaml \
         --set oathkeeper.config.errors.handlers.redirect.config.to="https://${FRONT_URL}/login" \
         --set oathkeeper.config.mutators.id_token.issuer_url="https://${AUTH_URL}" \
         --set ingress.proxy.hosts[0].host="${AUTH_URL}" \
