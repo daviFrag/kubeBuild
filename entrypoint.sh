@@ -166,8 +166,8 @@ if [ $TYPE == "go-graph" ]; then
         --set oathkeeper.config.mutators.id_token.issuer_url="https://${AUTH_URL}" \
         --set ingress.proxy.hosts[0].host="${AUTH_URL}" \
         --set ingress.api.hosts[0].host="${AUTH_URL}" \
-        --namespace="${KUBE_NAMESPACE}"
-        ory/oathkeeper \
+        --namespace="${KUBE_NAMESPACE}" \
+        ory/oathkeeper
 
     
 fi
