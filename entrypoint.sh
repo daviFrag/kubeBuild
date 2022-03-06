@@ -128,7 +128,7 @@ if [ $TYPE == "go-graph" ]; then
 
     # TODO DA SISTEMARE L'URL O SE NO AGGIUNGERE IL FRONT URL 
     helm upgrade --install \
-        --set fullnameOverride="$test-postgresql" \
+        --set fullnameOverride="test-postgresql" \
         --namespace="${KUBE_NAMESPACE}" \
         --set volumePermissions.enabled=true \
         --set initdbScripts."init\.sql"="CREATE DATABASE keto;
