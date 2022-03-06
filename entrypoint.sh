@@ -93,7 +93,7 @@ fi
 if [ $TYPE == "go-graph" ]; then
     helm repo add bitnami https://charts.bitnami.com/bitnami
     helm repo add ory https://k8s.ory.sh/helm/charts
-    
+
     helm upgrade --install \
         --set fullnameOverride="${KUBE_NAMESPACE}-postgresql" \
         --set auth.username="${POSTGRES_USER}" \
@@ -153,7 +153,7 @@ if [ $TYPE == "go-graph" ]; then
         --set kratos.config.selfservice.flows.recovery.ui_url="https://${FRONT_URL}/recovery" \
         --set kratos.config.selfservice.flows.verification.ui_url="https://${FRONT_URL}/verification" \
         --set kratos.config.selfservice.flows.verification.after.default_browser_return_url="https://${FRONT_URL}/login" \
-        --set kratos.config.selfservice.flows.logout.ui_url="https://${FRONT_URL}/logout" \
+        --set kratos.config.selfservice.flows.logout.after.default_browser_return_url="https://${FRONT_URL}/login" \
         --set kratos.config.selfservice.flows.registration.ui_url="https://${FRONT_URL}/registration" \
         --set kratos.config.selfservice.flows.error.ui_url="https://${FRONT_URL}/error" \
         --namespace="${KUBE_NAMESPACE}" \
@@ -166,8 +166,8 @@ if [ $TYPE == "go-graph" ]; then
         --set oathkeeper.config.mutators.id_token.issuer_url="https://${AUTH_URL}" \
         --set ingress.proxy.hosts[0].host="${AUTH_URL}" \
         --set ingress.api.hosts[0].host="${AUTH_URL}" \
-        ory/oathkeeper \
         --namespace="${KUBE_NAMESPACE}"
+        ory/oathkeeper \
 
     
 fi
