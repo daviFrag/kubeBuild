@@ -5,6 +5,12 @@ branding:
   icon: 'terminal'
   color: 'blue'
 inputs:
+  URL:
+    description: 'Api url'
+  AUTH_URL:
+    description: 'Auth url'
+  FRONT_URL:
+    description: 'Front url'
   TYPE:
     description: 'Deploy type'
   ENVIRONMENT:

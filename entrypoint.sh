@@ -131,33 +131,39 @@ if [ $TYPE == "go-graph" ]; then
         --set fullnameOverride="$test-postgresql" \
         --namespace="${KUBE_NAMESPACE}" \
         --set volumePermissions.enabled=true \
+        --set initdbScripts."init\.sql"="CREATE DATABASE keto;
+    CREATE USER keto WITH ENCRYPTED PASSWORD 'keto';
+    GRANT ALL PRIVILEGES ON DATABASE keto TO keto;
+    CREATE DATABASE kratos;
+    CREATE USER kratos WITH ENCRYPTED PASSWORD 'kratos';
+    GRANT ALL PRIVILEGES ON DATABASE kratos TO kratos;" \
         "test-postgresql" \
         bitnami/postgresql
 
     helm upgrade --install kratos -f oryauth/kratos.yaml \
-        --set kratos.serve.public.base_url="https://${URL}/.ory/kratos/public/" \
-        --set kratos.session.cookie.domain="${URL}" \
-        --set kratos.config.selfservice.default_browser_return_url="https://${URL}" \
-        --set kratos.config.selfservice.whitelisted_return_urls[0]="https://${URL}" \
-        --set kratos.config.selfservice.whitelisted_return_urls[1]="https://${URL}/login" \
-        --set kratos.config.selfservice.flows.login.ui_url="https://${URL}/login" \
-        --set kratos.config.selfservice.flows.settings.ui_url="https://${URL}/settings" \
-        --set kratos.config.selfservice.flows.recovery.ui_url="https://${URL}/recovery" \
-        --set kratos.config.selfservice.flows.verification.ui_url="https://${URL}/verification" \
-        --set kratos.config.selfservice.flows.verification.after.default_browser_return_url="https://${URL}/login" \
-        --set kratos.config.selfservice.flows.logout.ui_url="https://${URL}/logout" \
-        --set kratos.config.selfservice.flows.registration.ui_url="https://${URL}/registration" \
-        --set kratos.config.selfservice.flows.error.ui_url="https://${URL}/error" \
+        --set kratos.serve.public.base_url="https://${AUTH_URL}/.ory/kratos/public/" \
+        --set kratos.session.cookie.domain="${FRONT_URL}" \
+        --set kratos.config.selfservice.default_browser_return_url="https://${FRONT_URL}" \
+        --set kratos.config.selfservice.whitelisted_return_urls[0]="https://${FRONT_URL}" \
+        --set kratos.config.selfservice.whitelisted_return_urls[1]="https://${FRONT_URL}/login" \
+        --set kratos.config.selfservice.flows.login.ui_url="https://${FRONT_URL}/login" \
+        --set kratos.config.selfservice.flows.settings.ui_url="https://${FRONT_URL}/settings" \
+        --set kratos.config.selfservice.flows.recovery.ui_url="https://${FRONT_URL}/recovery" \
+        --set kratos.config.selfservice.flows.verification.ui_url="https://${FRONT_URL}/verification" \
+        --set kratos.config.selfservice.flows.verification.after.default_browser_return_url="https://${FRONT_URL}/login" \
+        --set kratos.config.selfservice.flows.logout.ui_url="https://${FRONT_URL}/logout" \
+        --set kratos.config.selfservice.flows.registration.ui_url="https://${FRONT_URL}/registration" \
+        --set kratos.config.selfservice.flows.error.ui_url="https://${FRONT_URL}/error" \
         --namespace="${KUBE_NAMESPACE}" \
         ory/kratos
     
     helm upgrade --install keto -f oryauth/keto.yaml ory/keto --namespace="${KUBE_NAMESPACE}"
 
     helm upgrade --install oathkeeper -f oryauth/oathkeeper.yaml \ 
-        --set oathkeeper.config.errors.handlers.redirect.config.to="https://${URL}/login" \
-        --set oathkeeper.config.mutators.id_token.issuer_url="https://${URL}" \
-        --set ingress.proxy.hosts[0].host="${URL}" \
-        --set ingress.api.hosts[0].host="${URL}" \
+        --set oathkeeper.config.errors.handlers.redirect.config.to="https://${FRONT_URL}/login" \
+        --set oathkeeper.config.mutators.id_token.issuer_url="https://${AUTH_URL}" \
+        --set ingress.proxy.hosts[0].host="${AUTH_URL}" \
+        --set ingress.api.hosts[0].host="${AUTH_URL}" \
         ory/oathkeeper \
         --namespace="${KUBE_NAMESPACE}"
 
