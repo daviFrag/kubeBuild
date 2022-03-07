@@ -97,7 +97,6 @@ if [ $TYPE == "go-graph" ]; then
         --set auth.username="${POSTGRES_USER}" \
         --set auth.password="${POSTGRES_PASSWORD}" \
         --set auth.database="${POSTGRES_DB}" \
-        --set auth.enablePostgresUser=false \
         --set image.tag="${POSTGRES_VERSION}" \
         --namespace="$KUBE_NAMESPACE" \
         --set volumePermissions.enabled=true \
