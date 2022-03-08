@@ -99,6 +99,7 @@ if [ $TYPE == "go-graph" ]; then
         --set auth.database="${POSTGRES_DB}" \
         --set image.tag="${POSTGRES_VERSION}" \
         --namespace="$KUBE_NAMESPACE" \
+        --set initdbScripts."init\.sql"='CREATE EXTENSION IF NOT EXISTS "uuid-ossp";' \
         --set volumePermissions.enabled=true \
         "${KUBE_NAMESPACE}-postgresql" \
         bitnami/postgresql
