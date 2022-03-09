@@ -91,6 +91,9 @@ if [ $TYPE == "django" ]; then
 fi
 
 if [ $TYPE == "go-graph" ]; then
+
+    #--set primary.initdb.user="postgres" \
+    #--set primary.initdb.scripts."init\.sql"='CREATE EXTENSION IF NOT EXISTS "uuid-ossp";' \
     helm repo add bitnami https://charts.bitnami.com/bitnami
     helm upgrade --install \
         --set fullnameOverride="${KUBE_NAMESPACE}-postgresql" \
@@ -99,8 +102,6 @@ if [ $TYPE == "go-graph" ]; then
         --set auth.database="${POSTGRES_DB}" \
         --set image.tag="${POSTGRES_VERSION}" \
         --namespace="$KUBE_NAMESPACE" \
-        --set primary.initdb.user="postgres" \
-        --set primary.initdb.scripts."init\.sql"='CREATE EXTENSION IF NOT EXISTS "uuid-ossp";' \
         --set volumePermissions.enabled=true \
         "${KUBE_NAMESPACE}-postgresql" \
         bitnami/postgresql
