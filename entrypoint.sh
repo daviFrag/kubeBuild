@@ -99,7 +99,6 @@ if [ $TYPE == "go-graph" ]; then
         --set auth.username="${POSTGRES_USER}" \
         --set auth.password="${POSTGRES_PASSWORD}" \
         --set auth.database="${POSTGRES_DB}" \
-        --set auth.enablePostgresUser=false \
         --set image.tag="${POSTGRES_VERSION}" \
         --namespace="$KUBE_NAMESPACE" \
         --set volumePermissions.enabled=true \
@@ -133,12 +132,13 @@ if [ $TYPE == "go-graph" ]; then
         --set fullnameOverride="test-postgresql" \
         --namespace="${KUBE_NAMESPACE}" \
         --set volumePermissions.enabled=true \
-        --set initdbScripts."init\.sql"="CREATE DATABASE keto;
-    CREATE USER keto WITH ENCRYPTED PASSWORD 'keto';
-    GRANT ALL PRIVILEGES ON DATABASE keto TO keto;
-    CREATE DATABASE kratos;
-    CREATE USER kratos WITH ENCRYPTED PASSWORD 'kratos';
-    GRANT ALL PRIVILEGES ON DATABASE kratos TO kratos;" \
+        --set primary.initdb.user="postgres" \
+        --set primary.initdb.scripts."init\.sql"="CREATE DATABASE keto;
+            CREATE USER keto WITH ENCRYPTED PASSWORD 'keto';
+            GRANT ALL PRIVILEGES ON DATABASE keto TO keto;
+            CREATE DATABASE kratos;
+            CREATE USER kratos WITH ENCRYPTED PASSWORD 'kratos';
+            GRANT ALL PRIVILEGES ON DATABASE kratos TO kratos;" \
         "test-postgresql" \
         bitnami/postgresql
 
