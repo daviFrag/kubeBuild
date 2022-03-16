@@ -151,6 +151,8 @@ helm upgrade ${KUBE_NAMESPACE} ./deploy --install \
     --namespace="${KUBE_NAMESPACE}" \
     --set url=${URL} \
     --set environment="${ENVIRONMENT}" \
+    --set authEndpoint="${AUTH_ENDPOINT}" \
+    --set corsWhitelist="${CORS_WHITELIST}" \
     --set image.secret=${TYPE}-${KUBE_NAMESPACE} \
     --set-string application.name="${KUBE_NAMESPACE}" \
     --set postgresqlUsername="${POSTGRES_USER}" \
