@@ -150,6 +150,7 @@ helm upgrade ${KUBE_NAMESPACE} ./deploy --install \
     --set image.users=${IMAGE_USERS} \
     --set image.pi=${IMAGE_PI} \
     --set image.gateway=${IMAGE_GATEWAY} \
+    --set image.auth=${IMAGE_AUTH} \
     --namespace="${KUBE_NAMESPACE}" \
     --set url=${URL} \
     --set environment="${ENVIRONMENT}" \
