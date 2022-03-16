@@ -141,6 +141,8 @@ elif [ $TYPE == "nextjs" ]; then
     mv $TYPE deploy
 elif [ $TYPE == "go-graph" ]; then
     mv $TYPE deploy
+elif [ $TYPE == "auth" ]; then
+    mv $TYPE deploy
 fi
 
 helm upgrade ${KUBE_NAMESPACE} ./deploy --install \
@@ -158,8 +160,10 @@ helm upgrade ${KUBE_NAMESPACE} ./deploy --install \
     --set postgresqlUsername="${POSTGRES_USER}" \
     --set-string postgresqlPassword="${POSTGRES_PASSWORD}" \
     --set postgresqlDatabase="${POSTGRES_DB}" \
+    --set postgresqlHost="${POSTGRES_HOST}" \
     --set rabbitmq.user="${RABBITMQ_USER}" \
     --set-string rabbitmq.psw="${RABBITMQ_PSW}" \
     --set rabbitmq.vhost="${RABBITMQ_VHOST}" \
+    --set redis.host="${REDIS_HOST}" \
     --set redis.password="${REDIS_PASSWORD}" \
     --timeout 30m0s
