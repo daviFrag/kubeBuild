@@ -107,21 +107,21 @@ if [ $TYPE == "go-graph" ]; then
         bitnami/postgresql
 
     # DIsabilito la persitence dato che per adesso tutti i casi di fallimento di redis sono ripristinati con il db (Da riabilitare magari in futuro)
+    #         --set volumePermissions.enabled=true \
+    #         --set master.persistence.enabled=true \
+    #         --set slave.persistence.enabled=true \
+    #         --set master.persistence.enabled=true \
+    #         --set master.persistence.path=/data \
+    #         --set master.persistence.size=8Gi \
+    #         --set slave.persistence.enabled=true \
+    #         --set slave.persistence.path=/data \
+    #         --set slave.persistence.size=8Gi \
     helm upgrade --install \
         --set auth.password="${REDIS_PASSWORD}" \
         --set cluster.slaveCount=1 \
         --set securityContext.enabled=true \
         --set securityContext.fsGroup=2000 \
         --set securityContext.runAsUser=1000 \
-#         --set volumePermissions.enabled=true \
-#         --set master.persistence.enabled=true \
-#         --set slave.persistence.enabled=true \
-#         --set master.persistence.enabled=true \
-#         --set master.persistence.path=/data \
-#         --set master.persistence.size=8Gi \
-#         --set slave.persistence.enabled=true \
-#         --set slave.persistence.path=/data \
-#         --set slave.persistence.size=8Gi \
         --namespace="${KUBE_NAMESPACE}" \
         "${KUBE_NAMESPACE}-redis" \
         bitnami/redis
