@@ -118,11 +118,9 @@ if [ $TYPE == "go-graph" ]; then
         --set master.persistence.enabled=true \
         --set master.persistence.path=/data \
         --set master.persistence.size=8Gi \
-        --set master.persistence.storageClass=manual \
         --set slave.persistence.enabled=true \
         --set slave.persistence.path=/data \
         --set slave.persistence.size=8Gi \
-        --set slave.persistence.storageClass=manual \
         --namespace="${KUBE_NAMESPACE}" \
         "${KUBE_NAMESPACE}-redis" \
         bitnami/redis
