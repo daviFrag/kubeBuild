@@ -95,16 +95,16 @@ if [ $TYPE == "go-graph" ]; then
     #--set primary.initdb.user="postgres" \
     #--set primary.initdb.scripts."init\.sql"='CREATE EXTENSION IF NOT EXISTS "uuid-ossp";' \
     helm repo add bitnami https://charts.bitnami.com/bitnami
-    helm upgrade --install \
-        --set fullnameOverride="${KUBE_NAMESPACE}-postgresql" \
-        --set auth.username="${POSTGRES_USER}" \
-        --set auth.password="${POSTGRES_PASSWORD}" \
-        --set auth.database="${POSTGRES_DB}" \
-        --set image.tag="${POSTGRES_VERSION}" \
-        --namespace="$KUBE_NAMESPACE" \
-        --set volumePermissions.enabled=true \
-        "${KUBE_NAMESPACE}-postgresql" \
-        bitnami/postgresql
+    # helm upgrade --install \
+    #     --set fullnameOverride="${KUBE_NAMESPACE}-postgresql" \
+    #     --set auth.username="${POSTGRES_USER}" \
+    #     --set auth.password="${POSTGRES_PASSWORD}" \
+    #     --set auth.database="${POSTGRES_DB}" \
+    #     --set image.tag="${POSTGRES_VERSION}" \
+    #     --namespace="$KUBE_NAMESPACE" \
+    #     --set volumePermissions.enabled=true \
+    #     "${KUBE_NAMESPACE}-postgresql" \
+    #     bitnami/postgresql
 
     # DIsabilito la persitence dato che per adesso tutti i casi di fallimento di redis sono ripristinati con il db (Da riabilitare magari in futuro)
     #         --set volumePermissions.enabled=true \
