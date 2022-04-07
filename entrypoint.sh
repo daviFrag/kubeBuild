@@ -96,6 +96,7 @@ if [ $TYPE == "go-graph" ]; then
     #--set primary.initdb.scripts."init\.sql"='CREATE EXTENSION IF NOT EXISTS "uuid-ossp";' \
     helm repo add bitnami https://charts.bitnami.com/bitnami
     helm upgrade --install \
+        --version "11.1.9" \
         --set fullnameOverride="${KUBE_NAMESPACE}-postgresql" \
         --set auth.username="${POSTGRES_USER}" \
         --set auth.password="${POSTGRES_PASSWORD}" \
@@ -103,6 +104,7 @@ if [ $TYPE == "go-graph" ]; then
         --set image.tag="${POSTGRES_VERSION}" \
         --namespace="$KUBE_NAMESPACE" \
         --set volumePermissions.enabled=true \
+        --set primary.existingExtendedConfigmap="${KUBE_NAMESPACE}-extended-configuration" \
         "${KUBE_NAMESPACE}-postgresql" \
         bitnami/postgresql
 
