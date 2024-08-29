@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM dtzar/helm-kubectl:3.7.1
+FROM dtzar/helm-kubectl:3.15.4
 
 COPY entrypoint.sh /entrypoint.sh
 
